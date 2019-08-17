@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Visual code studio
+**/*code-workspace
+.vscode
+
+# Pickle
+**/*.pickle
