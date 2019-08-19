@@ -19,7 +19,7 @@ import pickle
 # Use of this class:
 
 # Initialize the object:
-snowstorm = Snowstorm(baseUrl="http://termservice.test-nictiz.nl:8080", defaultBranchPath="MAIN")
+snowstorm = Snowstorm(baseUrl="http://domain.com:8080", defaultBranchPath="MAIN")
                                         # Provide the base URL without trailing forw-slash, and provide the desired default branch
 snowstorm.debug         = True      (Boolean), standard = False
 snowstorm.activeFilter  = "True"    (String), standard = "True"
@@ -40,7 +40,7 @@ snowstorm.printStatistics()             # Prints to terminal
 
 class Snowstorm():
     def __init__(self,
-                 baseUrl="http://termservice.test-nictiz.nl:8080",
+                 baseUrl="http://domain.com:8080",
                  defaultBranchPath="MAIN",
                  preferredLanguage="nl",
                  debug=False):
@@ -578,7 +578,7 @@ class Snowstorm():
 
 if __name__ == "__main__":
     snowstorm = Snowstorm(
-        baseUrl="http://termservice.test-nictiz.nl:8080",
+        baseUrl="http://domain.com:8080",
         defaultBranchPath="MAIN",
         debug=True)
     snowstorm.activeFilter = "True"
