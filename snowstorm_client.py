@@ -1,5 +1,5 @@
 # Maintainer: https://github.com/mertenssander/
-# v0.1-alpha
+# v0.1
 # Python 3.7, built-in requirements: urllib, json, pickle
 # Tested with Snowstorm 4.1.0 (https://github.com/IHTSDO/snowstorm)
 
