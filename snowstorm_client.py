@@ -7,6 +7,7 @@ from urllib.request import urlopen, Request
 from urllib.parse import quote, quote_plus
 import json
 import pickle
+import time
 
 # Todo
 # add descriptions for conceptid to cacheB and return these
@@ -408,6 +409,8 @@ class Snowstorm():
                     and x['acceptability'] == "ACCEPTABLE"),
                     usable_dict)
                 synonyms = []
+                fsn_dict = {}
+                pt_dict = {}
                 for item in fsn:
                     fsn_dict = {
                         'active': item['active'],
@@ -629,7 +632,7 @@ class Snowstorm():
 
 if __name__ == "__main__":
     snowstorm = Snowstorm(
-        debug=True, baseUrl="http://termservice.test-nictiz.nl:8080")
+        debug=True, baseUrl="http://domain.com:8080")
     snowstorm.activeFilter = "True"
     snowstorm.loadCache()
     # print(len(snowstorm.getConceptById(id="74400008")), "<- Should be 8")
@@ -648,6 +651,7 @@ if __name__ == "__main__":
     #                                   targetComponent="", mapTarget="P11.5")), "<- Should be 8")
 
 
+    start = time.time()
     # Test caching for all descriptions << verrichting
     try:
         appendicitis_children = snowstorm.findConcepts(ecl="<<71388002")
@@ -657,8 +661,11 @@ if __name__ == "__main__":
                 print(descriptions['categorized']['31000146106']['fsn']['term'])
             except KeyError:
                 print(descriptions['categorized']['900000000000509007']['fsn']['term'])
-    except KeyboardInterrupt:
+    except:
         snowstorm.writeCache()
+    end = time.time()
+    runtime = round(end-start)/60
+    print("Runtime: ", runtime, "minutes\n\n\n")
 
     snowstorm.printStatistics()
     snowstorm.writeCache()
