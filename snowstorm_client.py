@@ -87,87 +87,164 @@ class Snowstorm():
 
 
     def loadCache(self):
-        pickle_in = open("cacheA.pickle","rb")
-        self.cacheA = pickle.load(pickle_in)
+        try:
+            pickle_in = open("cacheA.pickle","rb")
+            self.cacheA = pickle.load(pickle_in)
+        except Exception as e:
+            print(e)
 
-        pickle_in = open("cacheB.pickle","rb")
-        self.cacheB = pickle.load(pickle_in)
+        try:
+            pickle_in = open("cacheB.pickle","rb")
+            self.cacheB = pickle.load(pickle_in)
+        except Exception as e:
+            print(e)
+        
+        try:
+            pickle_in = open("cacheC.pickle","rb")
+            self.cacheC = pickle.load(pickle_in)
+        except Exception as e:
+            print(e)
 
-        pickle_in = open("cacheC.pickle","rb")
-        self.cacheC = pickle.load(pickle_in)
+        try:
+            pickle_in = open("cacheD.pickle","rb")
+            self.cacheD = pickle.load(pickle_in)
+        except Exception as e:
+            print(e)
 
-        pickle_in = open("cacheD.pickle","rb")
-        self.cacheD = pickle.load(pickle_in)
+        try:            
+            pickle_in = open("cacheE.pickle","rb")
+            self.cacheE = pickle.load(pickle_in)
+        except Exception as e:
+            print(e)
+            
+        try:
+            pickle_in = open("cacheF.pickle","rb")
+            self.cacheF = pickle.load(pickle_in)
+        except Exception as e:
+            print(e)
+        
+        try:
+            pickle_in = open("cacheG.pickle","rb")
+            self.cacheG = pickle.load(pickle_in)
+        except Exception as e:
+            print(e)
+        
+        try:
+            pickle_in = open("cacheH.pickle","rb")
+            self.cacheH = pickle.load(pickle_in)
+        except Exception as e:
+            print(e)
 
-        pickle_in = open("cacheE.pickle","rb")
-        self.cacheE = pickle.load(pickle_in)
-
-        pickle_in = open("cacheF.pickle","rb")
-        self.cacheF = pickle.load(pickle_in)
-
-        pickle_in = open("cacheG.pickle","rb")
-        self.cacheG = pickle.load(pickle_in)
-
-        pickle_in = open("cacheH.pickle","rb")
-        self.cacheH = pickle.load(pickle_in)
-    
 
     def writeCache(self):
-        pickle_in = open("cacheA.pickle","rb")
-        cacheA_loaded = pickle.load(pickle_in)
-        self.cacheA = {**cacheA_loaded, **self.cacheA}
-        pickle_out = open("cacheA.pickle","wb")
-        pickle.dump(self.cacheA, pickle_out)
-        pickle_out.close()
+        # Cache A
+        try:
+            pickle_in = open("cacheA.pickle","rb")
+            cacheA_loaded = pickle.load(pickle_in)
+            self.cacheA = {**cacheA_loaded, **self.cacheA}
+        except Exception as e:
+            print(e)
+        try:
+            pickle_out = open("cacheA.pickle","wb")
+            pickle.dump(self.cacheA, pickle_out)
+            pickle_out.close()
+        except Exception as e:
+            print(e)
+            
+        # Cache B
+        try:
+            pickle_in = open("cacheB.pickle","rb")
+            cacheB_loaded = pickle.load(pickle_in)
+            self.cacheB = {**cacheB_loaded, **self.cacheB}
+        except Exception as e:
+            print(e)
+        try:
+            pickle_out = open("cacheB.pickle","wb")
+            pickle.dump(self.cacheB, pickle_out)
+            pickle_out.close()
+        except Exception as e:
+            print(e)
 
-        pickle_in = open("cacheB.pickle","rb")
-        cacheB_loaded = pickle.load(pickle_in)
-        self.cacheB = {**cacheB_loaded, **self.cacheB}
-        pickle_out = open("cacheB.pickle","wb")
-        pickle.dump(self.cacheB, pickle_out)
-        pickle_out.close()
+        # Cache C
+        try:
+            pickle_in = open("cacheC.pickle","rb")
+            cacheC_loaded = pickle.load(pickle_in)
+            self.cacheC = {**cacheC_loaded, **self.cacheC}
+        except Exception as e:
+            print(e)
+        try:
+            pickle_out = open("cacheC.pickle","wb")
+            pickle.dump(self.cacheC, pickle_out)
+            pickle_out.close()
+        except Exception as e:
+            print(e)
 
-        pickle_in = open("cacheC.pickle","rb")
-        cacheC_loaded = pickle.load(pickle_in)
-        self.cacheC = {**cacheC_loaded, **self.cacheC}
-        pickle_out = open("cacheC.pickle","wb")
-        pickle.dump(self.cacheC, pickle_out)
-        pickle_out.close()
+        # Cache D
+        try:
+            pickle_in = open("cacheD.pickle","rb")
+            cacheD_loaded = pickle.load(pickle_in)
+            self.cacheD = {**cacheD_loaded, **self.cacheD}
+        except Exception as e:
+            print(e)
+        try:
+            pickle_out = open("cacheD.pickle","wb")
+            pickle.dump(self.cacheD, pickle_out)
+            pickle_out.close()
+        except Exception as e:
+            print(e)
 
-        pickle_in = open("cacheD.pickle","rb")
-        cacheD_loaded = pickle.load(pickle_in)
-        self.cacheD = {**cacheD_loaded, **self.cacheD}
-        pickle_out = open("cacheD.pickle","wb")
-        pickle.dump(self.cacheD, pickle_out)
-        pickle_out.close()
-
-        pickle_in = open("cacheE.pickle","rb")
-        cacheE_loaded = pickle.load(pickle_in)
-        self.cacheE = {**cacheE_loaded, **self.cacheE}
+        # Cache E
+        try:
+            pickle_in = open("cacheE.pickle","rb")
+            cacheE_loaded = pickle.load(pickle_in)
+            self.cacheE = {**cacheE_loaded, **self.cacheE}
+        except Exception as e:
+            print(e)
         pickle_out = open("cacheE.pickle","wb")
         pickle.dump(self.cacheE, pickle_out)
         pickle_out.close()
 
-        pickle_in = open("cacheF.pickle","rb")
-        cacheF_loaded = pickle.load(pickle_in)
-        self.cacheF = {**cacheF_loaded, **self.cacheF}
-        pickle_out = open("cacheF.pickle","wb")
-        pickle.dump(self.cacheF, pickle_out)
-        pickle_out.close()
+        # Cache F
+        try:
+            pickle_in = open("cacheF.pickle","rb")
+            cacheF_loaded = pickle.load(pickle_in)
+            self.cacheF = {**cacheF_loaded, **self.cacheF}
+        except Exception as e:
+            print(e)
+        try:
+            pickle_out = open("cacheF.pickle","wb")
+            pickle.dump(self.cacheF, pickle_out)
+            pickle_out.close()
+        except Exception as e:
+            print(e)
         
-        pickle_in = open("cacheG.pickle","rb")
-        cacheG_loaded = pickle.load(pickle_in)
-        self.cacheG = {**cacheG_loaded, **self.cacheG}
-        pickle_out = open("cacheG.pickle","wb")
-        pickle.dump(self.cacheG, pickle_out)
-        pickle_out.close()
-        
-        pickle_in = open("cacheH.pickle","rb")
-        cacheH_loaded = pickle.load(pickle_in)
-        self.cacheH = {**cacheH_loaded, **self.cacheH}
-        pickle_out = open("cacheH.pickle","wb")
-        pickle.dump(self.cacheH, pickle_out)
-        pickle_out.close()
+        # Cache G
+        try:
+            pickle_in = open("cacheG.pickle","rb")
+            cacheG_loaded = pickle.load(pickle_in)
+            self.cacheG = {**cacheG_loaded, **self.cacheG}
+        except Exception as e:
+            print(e)
+        try:
+            pickle_out = open("cacheG.pickle","wb")
+            pickle.dump(self.cacheG, pickle_out)
+            pickle_out.close()
+        except Exception as e:
+            print(e)
+
+        # Cache H
+        try:        
+            pickle_in = open("cacheH.pickle","rb")
+            cacheH_loaded = pickle.load(pickle_in)
+            self.cacheH = {**cacheH_loaded, **self.cacheH}
+        except Exception as e:
+            print(e)
+        try:
+            pickle_out = open("cacheH.pickle","wb")
+            pickle.dump(self.cacheH, pickle_out)
+            pickle_out.close()
+        except Exception as e:
+            print(e)
 
 
     def getConceptById(self, id):
