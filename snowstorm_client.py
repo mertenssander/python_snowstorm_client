@@ -90,50 +90,58 @@ class Snowstorm():
         try:
             pickle_in = open("cacheA.pickle","rb")
             self.cacheA = pickle.load(pickle_in)
+            print("DEBUG [loadCache]: Cache A read")
         except Exception as e:
-            print(e)
+            print("DEBUG [loadCache]: Cache A read error: ",e)
 
         try:
             pickle_in = open("cacheB.pickle","rb")
             self.cacheB = pickle.load(pickle_in)
+            print("DEBUG [loadCache]: Cache B read")
         except Exception as e:
-            print(e)
+            print("DEBUG [loadCache]: Cache B read error: ",e)
         
         try:
             pickle_in = open("cacheC.pickle","rb")
             self.cacheC = pickle.load(pickle_in)
+            print("DEBUG [loadCache]: Cache C read")
         except Exception as e:
-            print(e)
+            print("DEBUG [loadCache]: Cache C read error: ",e)
 
         try:
             pickle_in = open("cacheD.pickle","rb")
             self.cacheD = pickle.load(pickle_in)
+            print("DEBUG [loadCache]: Cache D read")
         except Exception as e:
-            print(e)
+            print("DEBUG [loadCache]: Cache D read error: ",e)
 
         try:            
             pickle_in = open("cacheE.pickle","rb")
             self.cacheE = pickle.load(pickle_in)
+            print("DEBUG [loadCache]: Cache E read")
         except Exception as e:
-            print(e)
+            print("DEBUG [loadCache]: Cache E read error: ",e)
             
         try:
             pickle_in = open("cacheF.pickle","rb")
             self.cacheF = pickle.load(pickle_in)
+            print("DEBUG [loadCache]: Cache F read")
         except Exception as e:
-            print(e)
+            print("DEBUG [loadCache]: Cache F read error: ",e)
         
         try:
             pickle_in = open("cacheG.pickle","rb")
             self.cacheG = pickle.load(pickle_in)
+            print("DEBUG [loadCache]: Cache G read")
         except Exception as e:
-            print(e)
+            print("DEBUG [loadCache]: Cache G read error: ",e)
         
         try:
             pickle_in = open("cacheH.pickle","rb")
             self.cacheH = pickle.load(pickle_in)
+            print("DEBUG [loadCache]: Cache H read")
         except Exception as e:
-            print(e)
+            print("DEBUG [loadCache]: Cache H read error: ",e)
 
 
     def writeCache(self):
@@ -142,109 +150,128 @@ class Snowstorm():
             pickle_in = open("cacheA.pickle","rb")
             cacheA_loaded = pickle.load(pickle_in)
             self.cacheA = {**cacheA_loaded, **self.cacheA}
+            print("DEBUG [writeCache]: Cache A read")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache A read error: ",e)
         try:
             pickle_out = open("cacheA.pickle","wb")
             pickle.dump(self.cacheA, pickle_out)
             pickle_out.close()
+            print("DEBUG [writeCache]: Cache A written")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache A write error: ",e)
             
         # Cache B
         try:
             pickle_in = open("cacheB.pickle","rb")
             cacheB_loaded = pickle.load(pickle_in)
             self.cacheB = {**cacheB_loaded, **self.cacheB}
+            print("DEBUG [writeCache]: Cache B read")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache B read error: ",e)
         try:
             pickle_out = open("cacheB.pickle","wb")
             pickle.dump(self.cacheB, pickle_out)
             pickle_out.close()
+            print("DEBUG [writeCache]: Cache B written")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache B write error: ",e)
 
         # Cache C
         try:
             pickle_in = open("cacheC.pickle","rb")
             cacheC_loaded = pickle.load(pickle_in)
             self.cacheC = {**cacheC_loaded, **self.cacheC}
+            print("DEBUG [writeCache]: Cache C read")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache C read error: ",e)
         try:
             pickle_out = open("cacheC.pickle","wb")
             pickle.dump(self.cacheC, pickle_out)
             pickle_out.close()
+            print("DEBUG [writeCache]: Cache C written")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache C write error: ",e)
 
         # Cache D
         try:
             pickle_in = open("cacheD.pickle","rb")
             cacheD_loaded = pickle.load(pickle_in)
             self.cacheD = {**cacheD_loaded, **self.cacheD}
+            print("DEBUG [writeCache]: Cache D read")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache D read error: ",e)
         try:
             pickle_out = open("cacheD.pickle","wb")
             pickle.dump(self.cacheD, pickle_out)
             pickle_out.close()
+            print("DEBUG [writeCache]: Cache D written")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache D write error: ",e)
 
         # Cache E
         try:
             pickle_in = open("cacheE.pickle","rb")
             cacheE_loaded = pickle.load(pickle_in)
             self.cacheE = {**cacheE_loaded, **self.cacheE}
+            print("DEBUG [writeCache]: Cache E read")
         except Exception as e:
-            print(e)
-        pickle_out = open("cacheE.pickle","wb")
-        pickle.dump(self.cacheE, pickle_out)
-        pickle_out.close()
+            print("DEBUG [writeCache]: Cache E read error: ",e)
+        try:
+            pickle_out = open("cacheE.pickle","wb")
+            pickle.dump(self.cacheE, pickle_out)
+            pickle_out.close()
+            print("DEBUG [writeCache]: Cache E written")
+        except Exception as e:
+            print("DEBUG [writeCache]: Cache E write error: ",e)
 
         # Cache F
         try:
             pickle_in = open("cacheF.pickle","rb")
             cacheF_loaded = pickle.load(pickle_in)
             self.cacheF = {**cacheF_loaded, **self.cacheF}
+            print("DEBUG [writeCache]: Cache F read")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache F read error: ",e)
         try:
             pickle_out = open("cacheF.pickle","wb")
             pickle.dump(self.cacheF, pickle_out)
             pickle_out.close()
+            print("DEBUG [writeCache]: Cache F written")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache F write error: ",e)
         
         # Cache G
         try:
             pickle_in = open("cacheG.pickle","rb")
             cacheG_loaded = pickle.load(pickle_in)
             self.cacheG = {**cacheG_loaded, **self.cacheG}
+            print("DEBUG [writeCache]: Cache G read")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache G read error: ",e)
         try:
             pickle_out = open("cacheG.pickle","wb")
             pickle.dump(self.cacheG, pickle_out)
             pickle_out.close()
+            print("DEBUG [writeCache]: Cache G written")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache G write error: ",e)
 
         # Cache H
         try:        
             pickle_in = open("cacheH.pickle","rb")
             cacheH_loaded = pickle.load(pickle_in)
             self.cacheH = {**cacheH_loaded, **self.cacheH}
+            print("DEBUG [writeCache]: Cache H read")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache H read error: ",e)
         try:
             pickle_out = open("cacheH.pickle","wb")
             pickle.dump(self.cacheH, pickle_out)
             pickle_out.close()
+            print("DEBUG [writeCache]: Cache H written")
         except Exception as e:
-            print(e)
+            print("DEBUG [writeCache]: Cache H read error: ",e)
 
 
     def getConceptById(self, id):
@@ -330,9 +357,9 @@ class Snowstorm():
 
     def getDescendants(self, id):
         if id in self.cacheD:
-            if self.debug: print("DEBUG [getDescendants]: Cache \t[ID={}] \t[BRANCH={}] \t[SERVER={}]".format(self.id, self.defaultBranchPath, self.baseUrl))
+            if self.debug: print("DEBUG [getDescendants]: Cache \t[ID={}] \t[BRANCH={}] \t[SERVER={}]".format(id, self.defaultBranchPath, self.baseUrl))
         else:
-            if self.debug: print("DEBUG [getDescendants]: Request \t[ID={}] \t[BRANCH={}] \t[SERVER={}]".format(self.id, self.defaultBranchPath, self.baseUrl))
+            if self.debug: print("DEBUG [getDescendants]: Request \t[ID={}] \t[BRANCH={}] \t[SERVER={}]".format(id, self.defaultBranchPath, self.baseUrl))
             # Send request
             url = "{}/{}/concepts/{}/descendants?stated=false&limit=10000".format(self.baseUrl, self.defaultBranchPath, id)
             req = Request(url)
