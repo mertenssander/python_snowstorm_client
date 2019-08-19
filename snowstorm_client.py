@@ -50,6 +50,7 @@ class Snowstorm():
         self.searchTerm = ""
         self.id = ""
         self.cache_concepts = {}    # Concepts (cache_concepts)
+        self.cache_descriptions = {}    # Descriptions (cache_descriptions)
         self.cache_descendants = {}    # Descendants (cache_descendants)
         self.cache_children = {}    # Children (cache_children)
         self.cache_parents = {}    # Parents (cache_parents)
@@ -78,7 +79,7 @@ class Snowstorm():
                 print("DEBUG [testConnection]: Request \t[ID = {}] \t[BRANCH = {}] \t[SERVER = {}]\n\t [Failed]: {}".format(
                     "87717000", self.defaultBranchPath, self.baseUrl, e
                 ))
-                exit()
+
 
     def loadCache(self):
         try:
@@ -89,6 +90,16 @@ class Snowstorm():
         except Exception as e:
             if self.debug:
                 print("DEBUG [loadCache]: concepts cache read error: ", e)
+
+        try:
+            pickle_in = open("cache_descriptions.pickle", "rb")
+            self.cache_descriptions = pickle.load(pickle_in)
+            if self.debug:
+                print("DEBUG [loadCache]: descriptions cache read")
+        except Exception as e:
+            if self.debug:
+                print("DEBUG [loadCache]: descriptions cache read error: ", e)
+
 
         try:
             pickle_in = open("cache_descendants.pickle", "rb")
@@ -147,6 +158,27 @@ class Snowstorm():
         except Exception as e:
             if self.debug:
                 print("DEBUG [writeCache]: concepts cache write error: ", e)
+
+        # descriptions cache
+        try:
+            pickle_in = open("cache_descriptions.pickle", "rb")
+            cache_descriptions_loaded = pickle.load(pickle_in)
+            self.cache_descriptions = {
+                **cache_descriptions_loaded, **self.cache_descriptions}
+            if self.debug:
+                print("DEBUG [writeCache]: descriptions cache read")
+        except Exception as e:
+            if self.debug:
+                print("DEBUG [writeCache]: descriptions cache read error: ", e)
+        try:
+            pickle_out = open("cache_descriptions.pickle", "wb")
+            pickle.dump(self.cache_descriptions, pickle_out)
+            pickle_out.close()
+            if self.debug:
+                print("DEBUG [writeCache]: descriptions cache written")
+        except Exception as e:
+            if self.debug:
+                print("DEBUG [writeCache]: descriptions cache write error: ", e)
 
         # cache descendants
         try:
@@ -235,12 +267,12 @@ class Snowstorm():
         # If concept present in cache, do not request
         if id in self.cache_concepts:
             if self.debug:
-                print("DEBUG [getConceptId]: Cache \t[ID = {}] \t[BRANCH = {}] \t[SERVER = {}]".format(
+                print("DEBUG [getConceptById]: Cache \t[ID = {}] \t[BRANCH = {}] \t[SERVER = {}]".format(
                     id, self.defaultBranchPath, self.baseUrl))
         # If concept not present in cache, request it and add it to cache
         else:
             if self.debug:
-                print("DEBUG [getConceptId]: Request \t[ID = {}] \t[BRANCH = {}] \t[SERVER = {}]".format(
+                print("DEBUG [getConceptById]: Request \t[ID = {}] \t[BRANCH = {}] \t[SERVER = {}]".format(
                     id, self.defaultBranchPath, self.baseUrl))
             url = "{}/{}/concepts/{}".format(self.baseUrl,
                                              self.defaultBranchPath, id)
@@ -321,6 +353,113 @@ class Snowstorm():
         # Clean all relevant self.variables used in this function
         self.cacheTemp = {}
         return results
+
+    def getDescriptions(self, id):
+        # If concepts' descriptions present in cache, do not request
+        if id in self.cache_descriptions:
+            if self.debug:
+                print("DEBUG [getDescriptions]: Cache \t[ID = {}] \t[BRANCH = {}] \t[SERVER = {}]".format(
+                    id, self.defaultBranchPath, self.baseUrl))
+        # If concept not present in cache, request it and add it to cache
+        else:
+            if self.debug:
+                print("DEBUG [getDescriptions]: Request \t[ID = {}] \t[BRANCH = {}] \t[SERVER = {}]".format(
+                    id, self.defaultBranchPath, self.baseUrl))
+            url = "{}/{}/descriptions?concept={}&limit=10000".format(self.baseUrl,
+                                                                     self.defaultBranchPath, id)
+            req = Request(url)
+            req.add_header('Accept-Language', self.preferredLanguage)
+            response = urlopen(req).read()
+            response = json.loads(response.decode('utf-8'))
+            response = response['items']
+            usable_dict = []
+            all_language_refsets = []
+            for value in response:
+                for language_refset, acceptability in value['acceptabilityMap'].items():
+                    language_readable = Snowstorm.getConceptById(
+                        self, id=language_refset)
+                    all_language_refsets.append(language_refset)
+                    usable_dict.append({
+                        'conceptId': value['conceptId'],
+                        'active': value['active'],
+                        'language_refset': language_refset,
+                        'language_readable': language_readable['pt']['term'],
+                        'language': value['lang'],
+                        'type': value['type'],
+                        'caseSignificance': value['caseSignificance'],
+                        'acceptability': acceptability,
+                        'term': value['term']
+                    })
+
+            descriptions_by_type = {}
+            for refset in all_language_refsets:
+                fsn = filter(lambda x: (
+                    x['language_refset'] == refset
+                    and x['type'] == "FSN"),
+                    usable_dict)
+                pt = filter(lambda x: (
+                    x['language_refset'] == refset
+                    and x['type'] == "SYNONYM"
+                    and x['acceptability'] == "PREFERRED"),
+                    usable_dict)
+                syn = filter(lambda x: (
+                    x['language_refset'] == refset
+                    and x['type'] == "SYNONYM"
+                    and x['acceptability'] == "ACCEPTABLE"),
+                    usable_dict)
+                synonyms = []
+                for item in fsn:
+                    fsn_dict = {
+                        'active': item['active'],
+                        'language': item['language'],
+                        'language_readable': item['language_readable'],
+                        'language_refset_id': refset,
+                        'type': item['type'],
+                        'acceptability': item['acceptability'],
+                        'caseSignificance': value['caseSignificance'],
+                        'term': item['term'],
+                    }
+                for item in pt:
+                    pt_dict = {
+                        'active': item['active'],
+                        'language': item['language'],
+                        'language_readable': item['language_readable'],
+                        'language_refset_id': refset,
+                        'type': item['type'],
+                        'acceptability': item['acceptability'],
+                        'caseSignificance': value['caseSignificance'],
+                        'term': item['term'],
+                    }
+                for item in syn:
+                    synonyms.append({
+                        'active': item['active'],
+                        'language_readable': item['language_readable'],
+                        'language_refset_id': refset,
+                        'type': item['type'],
+                        'acceptability': item['acceptability'],
+                        'caseSignificance': value['caseSignificance'],
+                        'term': item['term'],
+                    })
+                descriptions_by_type.update({refset: {
+                    'language_readable' : item['language_readable'],
+                    'fsn':   fsn_dict,
+                    'pt':   pt_dict,
+                    'synonyms':   synonyms,
+                }})
+
+            self.cache_descriptions.update({
+                str(id): {
+                    'full': response,
+                    'categorized': descriptions_by_type
+                }
+            })
+            self.queryCount += 1
+
+        # Clean all relevant self.variables used in this function
+        output = self.cache_descriptions[id]
+        id = ""
+        # Return requested ID from cache
+        return output
 
     def getDescendants(self, id):
         if id in self.cache_descendants:
@@ -477,6 +616,7 @@ class Snowstorm():
     def printStatistics(self):
         print("Number of queries: ", self.queryCount)
         print("Number of items in cache_concepts: ", len(self.cache_concepts))
+        print("Number of items in cache_descriptions: ", len(self.cache_descriptions))
         print("Number of items in cache_descendants: ",
               len(self.cache_descendants))
         print("Number of items in cache_children: ", len(self.cache_children))
@@ -488,20 +628,37 @@ class Snowstorm():
 
 
 if __name__ == "__main__":
-    snowstorm = Snowstorm(debug=True)
+    snowstorm = Snowstorm(
+        debug=True, baseUrl="http://termservice.test-nictiz.nl:8080")
     snowstorm.activeFilter = "True"
     snowstorm.loadCache()
-    print(len(snowstorm.getConceptById(id="74400008")), "<- Should be 8")
+    # print(len(snowstorm.getConceptById(id="74400008")), "<- Should be 8")
 
     # Fill concept cache
     # print(len(snowstorm.findConcepts(ecl="<<138875005")), "<- Should be 356350")
 
-    print(len(snowstorm.findConcepts(
-        searchTerm="test device", ecl="<63653004")), "<- Should be 8")
-    print(len(snowstorm.getDescendants(id="74400008")), "<- Should be 32")
-    print(len(snowstorm.getChildren(id="74400008")), "<- Should be 15")
-    print(len(snowstorm.getParents(id="74400008")), "<- Should be 2")
-    print(len(snowstorm.getMapMembers(id="", referencedComponentId="",
-                                      targetComponent="", mapTarget="P11.5")), "<- Should be 8")
+    # print(len(snowstorm.findConcepts(
+    #     searchTerm="test device", ecl="<63653004")), "<- Should be 8")
+    # test = snowstorm.getDescriptions(id="74400008")
+    # print(len(snowstorm.getDescriptions(id="74400008")), test['categorized']['31000146106']['fsn']['term'])
+    # print(len(snowstorm.getDescendants(id="74400008")), "<- Should be 32")
+    # print(len(snowstorm.getChildren(id="74400008")), "<- Should be 15")
+    # print(len(snowstorm.getParents(id="74400008")), "<- Should be 2")
+    # print(len(snowstorm.getMapMembers(id="", referencedComponentId="",
+    #                                   targetComponent="", mapTarget="P11.5")), "<- Should be 8")
+
+
+    # Test caching for all descriptions << verrichting
+    try:
+        appendicitis_children = snowstorm.findConcepts(ecl="<<71388002")
+        for value in appendicitis_children:
+            descriptions = snowstorm.getDescriptions(id=value)
+            try:
+                print(descriptions['categorized']['31000146106']['fsn']['term'])
+            except KeyError:
+                print(descriptions['categorized']['900000000000509007']['fsn']['term'])
+    except KeyboardInterrupt:
+        snowstorm.writeCache()
+
     snowstorm.printStatistics()
     snowstorm.writeCache()
