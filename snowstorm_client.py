@@ -19,8 +19,8 @@ import pickle
 # Use of this class:
 
 # Initialize the object:
-snowstorm = Snowstorm(baseUrl="http://domain.com:8080", defaultBranchPath="MAIN")
-                                        # Provide the base URL without trailing forw-slash, and provide the desired default branch
+# Provide the base URL without trailing forw-slash, and provide the desired default branch and language.
+snowstorm = Snowstorm(baseUrl="http://domain.com:8080", defaultBranchPath="MAIN", preferredLanguage="nl")
 snowstorm.debug         = True      (Boolean), standard = False
 snowstorm.activeFilter  = "True"    (String), standard = "True"
 snowstorm.loadCache()
