@@ -3,8 +3,8 @@
 # Python 3.7, built-in requirements: urllib, json, pickle
 # Tested with Snowstorm 4.1.0 (https://github.com/IHTSDO/snowstorm)
 
-from urllib.request import *
-from urllib.parse import *
+from urllib.request import urlopen, Request
+from urllib.parse import quote, quote_plus
 import json
 import pickle
 
@@ -73,7 +73,7 @@ class Snowstorm():
                                                  self.defaultBranchPath, "87717000")
                 req = Request(url)
                 req.add_header('Accept-Language', self.preferredLanguage)
-                response = urlopen(req).read()
+                urlopen(req).read()
                 print("DEBUG [testConnection]: Request \t[ID = {}] \t[BRANCH = {}] \t[SERVER = {}]\n\t [Success]".format(
                     "87717000", self.defaultBranchPath, self.baseUrl
                 ))
@@ -426,7 +426,6 @@ class Snowstorm():
             req.add_header('Accept-Language', self.preferredLanguage)
             response = urlopen(req).read()
             items = json.loads(response.decode('utf-8'))
-            total_results = items['total']
 
             # Update query count
             self.queryCount += 1
