@@ -26,6 +26,12 @@ snowstorm.debug         = True      (Boolean), standard = False
 snowstorm.activeFilter  = "True"    (String), standard = "True"
 snowstorm.loadCache()
 snowstorm.getConceptById(id="74400008")
+snowstorm.getDescriptions(id="7440008") 
+    # output:
+    # output['full'] -> all descriptions as provided by snowstorm server
+    # output['categorized']['900000000000509007']['fsn']['term'] -> FSN categorized by language refset
+    # output['categorized']['900000000000509007']['pt']['term'] -> PT categorized by language refset
+    # output['categorized']['900000000000509007']['synonyms'][0]['term'] -> First synonyms categorized by language refset
 snowstorm.findConcepts([searchterm="testing device"], [ecl="<74400008"])
 snowstorm.getDescendants(id="74400008")
 snowstorm.getChildren(id="74400008")
@@ -669,3 +675,4 @@ if __name__ == "__main__":
 
     snowstorm.printStatistics()
     snowstorm.writeCache()
+    

@@ -109,3 +109,6 @@ venv.bak/
 
 # Pickle
 **/*.pickle
+
+# Testing
+test.*
