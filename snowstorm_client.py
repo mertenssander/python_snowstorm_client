@@ -26,9 +26,9 @@ snowstorm.debug         = True      (Boolean), standard = False
 snowstorm.activeFilter  = "True"    (String), standard = "True"
 snowstorm.loadCache()
 snowstorm.getConceptById(id="74400008")
-snowstorm.getDescriptions(id="7440008") 
+snowstorm.getDescriptions(id="7440008", [full_output=False]) 
     # output:
-    # output['full'] -> all descriptions as provided by snowstorm server
+    # output['full'] -> all descriptions as provided by snowstorm server. Will not be provided by default to reduce cache size.
     # output['categorized']['900000000000509007']['fsn']['term'] -> FSN categorized by language refset
     # output['categorized']['900000000000509007']['pt']['term'] -> PT categorized by language refset
     # output['categorized']['900000000000509007']['synonyms'][0]['term'] -> First synonyms categorized by language refset
@@ -361,7 +361,7 @@ class Snowstorm():
         self.cacheTemp = {}
         return results
 
-    def getDescriptions(self, id):
+    def getDescriptions(self, id, full_output=False):
         # If concepts' descriptions present in cache, do not request
         if id in self.cache_descriptions:
             if self.debug:
@@ -388,6 +388,7 @@ class Snowstorm():
                     all_language_refsets.append(language_refset)
                     usable_dict.append({
                         'conceptId': value['conceptId'],
+                        'descriptionId' : value['descriptionId'],
                         'active': value['active'],
                         'language_refset': language_refset,
                         'language_readable': language_readable['pt']['term'],
@@ -420,6 +421,7 @@ class Snowstorm():
                 for item in fsn:
                     fsn_dict = {
                         'active': item['active'],
+                        'descriptionId' : item['descriptionId'],
                         'language': item['language'],
                         'language_readable': item['language_readable'],
                         'language_refset_id': refset,
@@ -431,6 +433,7 @@ class Snowstorm():
                 for item in pt:
                     pt_dict = {
                         'active': item['active'],
+                        'descriptionId' : item['descriptionId'],
                         'language': item['language'],
                         'language_readable': item['language_readable'],
                         'language_refset_id': refset,
@@ -442,6 +445,7 @@ class Snowstorm():
                 for item in syn:
                     synonyms.append({
                         'active': item['active'],
+                        'descriptionId' : item['descriptionId'],
                         'language_readable': item['language_readable'],
                         'language_refset_id': refset,
                         'type': item['type'],
@@ -455,13 +459,19 @@ class Snowstorm():
                     'pt':   pt_dict,
                     'synonyms':   synonyms,
                 }})
-
-            self.cache_descriptions.update({
-                str(id): {
-                    'full': response,
-                    'categorized': descriptions_by_type
-                }
-            })
+            if full_output:
+                self.cache_descriptions.update({
+                    str(id): {
+                        'full': response,
+                        'categorized': descriptions_by_type
+                    }
+                })
+            else:
+                self.cache_descriptions.update({
+                    str(id): {
+                        'categorized': descriptions_by_type
+                    }
+                })
             self.queryCount += 1
 
         # Clean all relevant self.variables used in this function

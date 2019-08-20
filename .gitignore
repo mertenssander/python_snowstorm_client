@@ -112,3 +112,4 @@ venv.bak/
 
 # Testing
 test.*
+**/.DS_Store
