@@ -1,5 +1,5 @@
 # Maintainer: https://github.com/mertenssander/
-# v0.1
+# v0.2
 # Python 3.7, built-in requirements: urllib, json, pickle
 # Tested with Snowstorm 4.1.0 (https://github.com/IHTSDO/snowstorm)
 
@@ -598,7 +598,7 @@ class Snowstorm():
             print("DEBUG [getMapMembers]: Request \t[ID={}] \t[REFCOMP={}] \t[TARGETCOMP={}] \t[MAPTARG={}] \t[ACTIVE={}] \t[BRANCH={}] \t[SERVER={}]".format(
                 id, referencedComponentId, targetComponent, mapTarget, self.activeFilter, self.defaultBranchPath, self.baseUrl))
         # Send request
-        url = "{}/{}/members?limit=10000&referenceset={}&referencedComponentId={}&active={}&targetComponent={}&mapTarget={}".format(
+        url = "{}/{}/members?limit=10000&referenceSet={}&referencedComponentId={}&active={}&targetComponent={}&mapTarget={}".format(
             self.baseUrl, self.defaultBranchPath, id, referencedComponentId, self.activeFilter, targetComponent, mapTarget
         )
         req = Request(url)
