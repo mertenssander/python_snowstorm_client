@@ -111,5 +111,5 @@ venv.bak/
 **/*.pickle
 
 # Testing
-test.*
+tests/
 **/.DS_Store

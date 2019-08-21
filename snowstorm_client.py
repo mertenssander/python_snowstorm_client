@@ -617,16 +617,10 @@ class Snowstorm():
         results = items['items']
 
         # Add results to the member list (cache_mapmembers)
-        member_list = {}
+        member_list = []
         for index in results:
-            member_list.update({index['referencedComponentId']: index})
+            member_list.append(index)
         self.cache_mapmembers.update({id: member_list})
-
-        # Add results to the concepts cache (cache_concepts)
-        for value in results:
-            self.cache_concepts.update({
-                str(value['referencedComponent']['conceptId']): value['referencedComponent']
-            })
 
         # Clean all relevant self.variables used in this function
         self.cacheTemp = {}
@@ -668,15 +662,15 @@ if __name__ == "__main__":
 
 
     start = time.time()
-    # Test caching for all descriptions << verrichting
+    # Test caching/printing for all descriptions << 71388002
     try:
         appendicitis_children = snowstorm.findConcepts(ecl="<<71388002")
         for value in appendicitis_children:
             descriptions = snowstorm.getDescriptions(id=value)
             try:
-                print(descriptions['categorized']['31000146106']['fsn']['term'])
+                print(descriptions['categorized']['31000146106']['fsn']['term']) # Print NL if available
             except KeyError:
-                print(descriptions['categorized']['900000000000509007']['fsn']['term'])
+                print(descriptions['categorized']['900000000000509007']['fsn']['term']) # Use English as backup
     except:
         snowstorm.writeCache()
     end = time.time()
