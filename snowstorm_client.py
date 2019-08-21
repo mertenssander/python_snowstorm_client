@@ -7,7 +7,6 @@ from urllib.request import urlopen, Request
 from urllib.parse import quote, quote_plus
 import json
 import pickle
-import time
 
 # Todo
 # add descriptions for conceptid to cacheB and return these
