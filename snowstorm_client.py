@@ -621,6 +621,12 @@ class Snowstorm():
             member_list.append(index)
         self.cache_mapmembers.update({id: member_list})
 
+        # Add results to the concepts cache (cache_concepts)
+        for value in results:
+            self.cache_concepts.update({
+                str(value['referencedComponent']['conceptId']) : value['referencedComponent']
+                })
+            
         # Clean all relevant self.variables used in this function
         self.cacheTemp = {}
         return self.cache_mapmembers[id]
