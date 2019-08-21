@@ -1,5 +1,5 @@
 # Maintainer: https://github.com/mertenssander/
-# v0.1
+# v0.2
 # Python 3.7, built-in requirements: urllib, json, pickle
 # Tested with Snowstorm 4.1.0 (https://github.com/IHTSDO/snowstorm)
 
@@ -7,7 +7,6 @@ from urllib.request import urlopen, Request
 from urllib.parse import quote, quote_plus
 import json
 import pickle
-import time
 
 # Todo
 # add descriptions for conceptid to cacheB and return these
@@ -599,7 +598,7 @@ class Snowstorm():
             print("DEBUG [getMapMembers]: Request \t[ID={}] \t[REFCOMP={}] \t[TARGETCOMP={}] \t[MAPTARG={}] \t[ACTIVE={}] \t[BRANCH={}] \t[SERVER={}]".format(
                 id, referencedComponentId, targetComponent, mapTarget, self.activeFilter, self.defaultBranchPath, self.baseUrl))
         # Send request
-        url = "{}/{}/members?limit=10000&referenceset={}&referencedComponentId={}&active={}&targetComponent={}&mapTarget={}".format(
+        url = "{}/{}/members?limit=10000&referenceSet={}&referencedComponentId={}&active={}&targetComponent={}&mapTarget={}".format(
             self.baseUrl, self.defaultBranchPath, id, referencedComponentId, self.activeFilter, targetComponent, mapTarget
         )
         req = Request(url)
@@ -621,7 +620,7 @@ class Snowstorm():
         for index in results:
             member_list.append(index)
         self.cache_mapmembers.update({id: member_list})
-
+            
         # Clean all relevant self.variables used in this function
         self.cacheTemp = {}
         return self.cache_mapmembers[id]
